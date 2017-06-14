@@ -1,0 +1,31 @@
+version: '3.1'
+
+networks:
+  traefik-network:
+    external: true
+  blogs-network:
+    driver: overlay
+
+services:
+  papillon-lituanien:
+    image: wordpress
+    networks:
+      - blogs-network
+      - traefik-network
+    deploy:
+      labels:
+        - "traefik.port=80"
+        - "traefik.frontend.rule=Host:papillon-lituanien.docker.ab0.fr"
+        - "traefik.docker.network=traefik-network"
+    environment:
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_HOST: mysql-papillon-lituanien
+
+  mysql-papillon-lituanien:
+    image: mysql:5.7
+    networks:
+      - blogs-network
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - "/var/swarm-data/volumes/wordpress-mysql-data/papillon-lituanien:/var/lib/mysql"

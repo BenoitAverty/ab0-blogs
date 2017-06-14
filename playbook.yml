@@ -1,0 +1,22 @@
+- hosts: docker
+  remote_user: root
+  become: yes
+  become_user: docker
+  vars_files:
+    - secrets.yml
+  tasks:
+    - name: Necessary folders
+      file:
+        path: "{{item}}"
+        state: directory
+      with_items:
+        - ~/stacks
+        - /var/swarm-data/volumes/wordpress-mysql-data/papillon-lituanien
+    - name: Copy stack file
+      copy:
+        src: ./ab0-blogs.yml
+        dest: ~/stacks/ab0-blogs.yml
+    - name: Stack deployment
+      command: docker stack deploy -c ~/stacks/ab0-blogs.yml ab0-blogs
+      environment:
+        MYSQL_PASSWORD: "{{ mysql_password }}"
