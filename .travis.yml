@@ -1,5 +1,7 @@
 install: true
 language: generic
+dist: trusty
+sudo: false
 
 addons:
   apt:
