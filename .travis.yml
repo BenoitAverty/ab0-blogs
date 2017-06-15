@@ -12,11 +12,11 @@ before_script:
   - sudo apt-get install ansible -y
 
 script:
-  - echo $VAULT_PASS > .vaultpass 2>/dev/null
-  - ansible-playbook playbook.yml -i inventory --vault-password-file=.vaultpass
+  - echo $VAULT_PASS > ./vaultpass
+  - ansible-playbook playbook.yml -i inventory --vault-password-file=./vaultpass
 
 after_script:
-  - rm -f .vaultpass
+  - rm -f ./vaultpass
 
 branches:
   only:
