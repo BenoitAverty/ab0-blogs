@@ -7,9 +7,9 @@ install: true
 
 before_script:
   - sudo apt-get install software-properties-common
-  - sudo apt-add-repository ppa:ansible/ansible
-  - sudo apt-get update
-  - sudo apt-get install ansible
+  - sudo apt-add-repository ppa:ansible/ansible -y
+  - sudo apt-get update -y
+  - sudo apt-get install ansible -y
 
 script:
   - echo $VAULT_PASS > .vaultpass 2>/dev/null
