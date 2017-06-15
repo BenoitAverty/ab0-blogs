@@ -40,7 +40,7 @@ services:
     deploy:
       labels:
         - "traefik.port=80"
-        - "traefik.frontend.rule=Host:ab0-blogs.docker.ab0.fr,PathPrefixStrip:/phpmyadmin/;AddPrefix:/"
+        - "traefik.frontend.rule=Host:ab0-blogs.docker.ab0.fr;PathPrefixStrip:/phpmyadmin"
         - "traefik.docker.network=traefik-network"
         - "traefik.frontend.passHostHeader=true"
     environment:
