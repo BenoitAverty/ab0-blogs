@@ -11,7 +11,7 @@
         state: directory
       with_items:
         - ~/stacks
-        - /var/swarm-data/volumes/wordpress-mysql-data/papillon-lituanien
+        - /var/swarm-data/volumes/ab0-blogs-mysql-data
     - name: Copy stack file
       copy:
         src: ./ab0-blogs.yml

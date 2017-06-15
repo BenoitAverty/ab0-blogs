@@ -31,3 +31,18 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - "/var/swarm-data/volumes/ab0-blogs-mysql-data:/var/lib/mysql"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    networks:
+      - blogs-network
+      - traefik-network
+    deploy:
+      labels:
+        - "traefik.port=80"
+        - "traefik.frontend.rule=Host:ab0-blogs.docker.ab0.fr,PathPrefixStrip:/phpmyadmin/;AddPrefix:/"
+        - "traefik.docker.network=traefik-network"
+        - "traefik.frontend.passHostHeader=true"
+    environment:
+      PMA_HOST: mysql
+      PMA_ABSOLUTE_URI: https://ab0-blogs.docker.ab0.fr/phpmyadmin/
