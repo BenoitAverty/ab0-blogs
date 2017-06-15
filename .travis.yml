@@ -1,0 +1,12 @@
+install: true
+
+addons:
+  apt:
+    packages:
+    - ansible
+
+script: echo $VAULT_PASS | ansible-playbook playbook.yml -i inventory --ask-vault-pass
+
+branches:
+  only:
+    - master

@@ -7,7 +7,7 @@ networks:
     driver: overlay
 
 services:
-  papillon-lituanien:
+  papillon-en-allemagne:
     image: wordpress
     networks:
       - blogs-network
@@ -15,17 +15,19 @@ services:
     deploy:
       labels:
         - "traefik.port=80"
-        - "traefik.frontend.rule=Host:papillon-lituanien.docker.ab0.fr"
+        - "traefik.frontend.rule=Host:papillon-en-allemagne.docker.ab0.fr"
         - "traefik.docker.network=traefik-network"
     environment:
       WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
-      WORDPRESS_DB_HOST: mysql-papillon-lituanien
+      WORDPRESS_DB_NAME: wordpress_pea
+      WORDPRESS_DB_HOST: mysql
 
-  mysql-papillon-lituanien:
+  mysql:
     image: mysql:5.7
+    user: "9000:9000"
     networks:
       - blogs-network
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
-      - "/var/swarm-data/volumes/wordpress-mysql-data/papillon-lituanien:/var/lib/mysql"
+      - "/var/swarm-data/volumes/ab0-blogs-mysql-data:/var/lib/mysql"
